@@ -26,7 +26,12 @@ namespace HelloDungeon
             bool gameOver = health < 0;
 
             //Introduction to Player
-            Console.WriteLine("Gillian Welcomes You");
+            Console.WriteLine("you arrive on the island of Juda and find the city of Opasus.");
+            Console.WriteLine("You find a board with job offers and see one mentioning a cave with treasure.");
+            Console.WriteLine("You sign up for the job and receive a reply the next day.");
+            Console.WriteLine("You wander up to a cave in the jungle.");
+            Console.WriteLine("A woman near the entrance with a torch greets you.");
+            Console.WriteLine("She introduces herself as Gillian and the writer of the job offer.");
             Console.WriteLine("What shall I call you " + playerName + "?");
 
             //Establish Player Name
@@ -40,7 +45,13 @@ namespace HelloDungeon
             Console.WriteLine("The reason you're here," + playerName + "is to excavate the legendary treasure of Juda.");
             Console.WriteLine("This treasure has been sought after by many adventurers before you.");
 
-            
+            //Player First Choice
+            string playerChoice = Console.ReadLine();
+
+            if (playerChoice == "1") ;
+            {
+                Console.WriteLine();
+            }
             
 
 
