@@ -20,8 +20,8 @@ namespace HelloDungeon
                 Console.WriteLine("1. " + option1);
 
                 Console.WriteLine("2. " + option2);
-                
-                if (option3 != " ")
+
+                if (option3 != "")
                 {
                     Console.WriteLine("3. " + option3);
                 }
@@ -29,17 +29,30 @@ namespace HelloDungeon
                 Console.Write("-> ");
                 playerChoice = Console.ReadLine();
 
-                if (playerChoice != "1" && playerChoice != "2" && playerChoice != "3")
+                if (playerChoice != "1" && playerChoice != "2")
                 {
+                    if (playerChoice == "3" && option3 != "")
+                    {
+                        continue;
+                    }
+
+                    //error message
                     Console.Clear();
                     Console.WriteLine("Did you type that right?");
                     Console.WriteLine("Press any key to continue");
                     Console.ReadKey(true);
+
+                    playerChoice = "";
                 }
 
             }
             return playerChoice;
         }
+        float StartBattle(float playerHealth, float enemyhealth)
+        {
+            return 0;
+        }
+        
         public void Run()
         {
             
@@ -48,19 +61,23 @@ namespace HelloDungeon
             string enemy1 = "Lagoona";
             string enemy2 = "Frostbite";
             string enemy3 = "Gargon";
-            string enemy4 = "Spider";
+            string enemy4 = "Large Spider";
             int maxEnemies = 6;
-            float health = 100.0f;
+            float enemyHealth = 100.0f;
+            float playerHealth = 100.0f;
             bool playerIsAlive = true;
+            bool enemyIsAlive = true;
             float damage = 1.1f;
             float strength = 1.0f;
             float defense = 0.0f; 
             int dungeonNumber = 0;
-            playerIsAlive = health > 0;
+            playerIsAlive = playerHealth > 0;
+            enemyIsAlive = enemyHealth > 0;
             bool gameOver = false;
             float sword1Damage = 8.0f;
             float bow1Damage = 7.0f;
             float mace1Damage = 9.0f;
+            float enemyAttack;
             gameOver = health < 0;
             
             //Player Health Status
@@ -68,9 +85,24 @@ namespace HelloDungeon
             {
                 Console.WriteLine("Healthy");
             }
-            
+            else if(health >= 75)
+            {
+                Console.WriteLine("Slightly Damaged");
+            }
+            else if(health >= 50)
+            {
+                Console.WriteLine("Moderate Damage");
+            }
+            else if(health >= 26)
+            {
+                Console.WriteLine("Heavy Damage");
+            }
+            else if(health <= 25)
+            {
+                Console.WriteLine("Near Death"); 
+            }
 
-            while (gameOver == false)
+            while (gameOver != true)
             {
                 string playerChoice = "";
 
@@ -84,18 +116,37 @@ namespace HelloDungeon
                 Console.WriteLine("You wander up to a cave in the jungle.");
                 Console.WriteLine("A woman near the entrance with a torch greets you.");
                 Console.WriteLine("She introduces herself as Gillian and the writer of the job offer.");
-                Console.WriteLine("'What shall I call you " + playerName + "?'");
-                Console.Write("-> ");
 
                 //Establish Player Name
-                string firstName = Console.ReadLine();
-                playerName = firstName;
-                Console.Clear();
+                while (playerChoice != "1")
+                {
+                    Console.Clear();
+                    playerChoice = "";
+                    Console.WriteLine("'What is your name?'");
+                    playerName = Console.ReadLine();
+                    Console.WriteLine(playerName + ", Is that correct?");
+                    Console.WriteLine("1. Yes");
+                    Console.WriteLine("2. No");
+                    playerChoice = Console.ReadLine();
+                    if (playerChoice == "2")
+                    {
+                        Console.WriteLine("'Oh, my apologies'");
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey(true);
+                    }
+                    else if (playerChoice == "1")
+                    {
+                        Console.WriteLine("'Great!'");
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                    }
 
-                
+                }
+
                 //Introduction to the Game
-                Console.WriteLine("'Regardless, Welcome to the cave of Lusmila on the island of Juda.'");
-                Console.WriteLine("'The reason you're here, " + playerName + " is to excavate the legendary treasure of Juda.'");
+                Console.WriteLine("'Welcome to the cave of Lusmila on the island of Juda.'");
+                Console.WriteLine("'The reason you're here, " + playerName + ", is to excavate the legendary treasure of Juda.'");
                 Console.WriteLine("'This treasure has been sought after by many adventurers before you.'");
                 Console.WriteLine("'Don't worry though, most of these adventurers did not survive, so the treasure will be yours.'");
                 Console.WriteLine("'Knowing this information, would you like to continue?'");
@@ -107,19 +158,23 @@ namespace HelloDungeon
                 playerChoice = Console.ReadLine();
                 Console.Clear();
 
-                if (playerChoice == "1" || playerChoice == "Yes")
+                while (playerChoice != "1")
                 {
-                    Console.WriteLine("'Great! let's move on through the cave entrance.'");
-                }
-                else if (playerChoice == "2" || playerChoice == "No")
-                {
-                    Console.WriteLine("Gillian looks slightly upset with your decision but understands.");
-                    Console.WriteLine("You head back down to Opasus and enjoy the rest of your trip, questioning whether you made the right decision.");
-
-                }
-                else
-                {
-                    Console.WriteLine("Gillian looks at you confused, not understanding what you mean.");
+                    if (playerChoice == "1")
+                    {
+                        Console.WriteLine("'Great!'");
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                    }
+                    else if (playerChoice == "2")
+                    {
+                        Console.WriteLine("Gillian looks disappointed but bids you farewell.");
+                        Console.WriteLine("You go back to Opasus questioning whether you made the right decision.");
+                        Console.WriteLine("Press any key");
+                        Console.ReadKey(true);
+                        return;
+                    }
                 }
 
 
@@ -128,37 +183,51 @@ namespace HelloDungeon
                 Console.WriteLine("You reach a giant silver door");
                 Console.WriteLine("Gillian goes to unlock the door then pauses");
                 Console.WriteLine("'I almost forgot, you will be needing a weapon for the enemies in this dungeon.'");
-                Console.WriteLine("'These are the only two weapons I can spare, please choose wisely.'");
 
                 //Second Player Choice: Weapon
-                Console.WriteLine("1. Rusty Sword");
-                Console.WriteLine("2. Rusty Mace");
-                Console.WriteLine("3. Stiff Bow");
-                Console.Write("-> ");
-                playerChoice = Console.ReadLine();
-
-                if (playerChoice == "1" || playerChoice == "Rusty Sword")
+                playerChoice = DisplayMenu("Please choose a weapon", "1. Rusty Sword", "2. Rusty Mace", "3. Stiff bow");
+                if (playerChoice == "1")
                 {
-                    Console.WriteLine("You pick up the rusty sword, it feels light in your hand");
+                    Console.WriteLine("The sword feels lighter than expected, you also have rust on your hands");
                     damage = sword1Damage;
-                    Console.WriteLine("Your damage increases to " + damage);
+                    Console.WriteLine("your damage increases." + damage);
                 }
-                else if (playerChoice == "2" || playerChoice == "Rusty Mace")
+                else if (playerChoice == "2")
                 {
-                    Console.WriteLine("You pick up the rusty mace, it is fairly heavy");
+                    Console.WriteLine("The Mace feels fairly heavy, the rust rubs off on your hand. ");
                     damage = mace1Damage;
-                    Console.WriteLine("Your damage increases to " + damage);
+                    Console.WriteLine("Your damage increases." + damage);
                 }
-                else if (playerChoice == "3" || playerChoice == "Rusty Bow")
+                else if (playerChoice == "3")
                 {
-                    Console.WriteLine("You pick up the rusty bow, it is really light");
+                    Console.WriteLine("You pull the bow string and find it to be stiff. This will be difficult to shoot with.");
                     damage = bow1Damage;
-                    Console.WriteLine("Your damage increases to " + damage);
+                    Console.WriteLine("Your damage increases." + damage);
                 }
-                else
-                {
-                    Console.WriteLine("It's best to have a weapon in this dungeon.");
-                }
+                Console.Clear();
+
+                //Tutorial Battle Story
+                Console.WriteLine("Gillian unlocks the Large Silver door and pushes it open.");
+                Console.WriteLine("A silver chest is on the other side of the room.");
+                Console.WriteLine("'Oh nice! There's already treasure here'");
+                Console.WriteLine("Gillian walks towards the chest and steps on a pressure plate.");
+                Console.WriteLine("Two Large spiders drop from the ceiling");
+                Console.WriteLine("Press any key to begin battle");
+                Console.ReadKey(true);
+                Console.Clear();
+
+                //Tutorial battle
+                
+
+
+
+
+
+
+
+
+
+
 
 
                 while (playerChoice != "1" && playerChoice != "2")
