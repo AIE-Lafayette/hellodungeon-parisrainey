@@ -11,23 +11,24 @@ namespace HelloDungeon
 
         //Initializes Game Stats
         string playerName = "Traveler";
-        string enemy1 = "Lagoona";
-        string enemy2 = "Frostbite";
-        string enemy3 = "Gargon";
-        string enemy4 = "Large Spider";
+        string enemy1 = "Lagoona"; //strength is 3
+        string enemy2 = "Frostbite"; //strength is 2
+        string enemy3 = "Gargon"; //strength is 3
+        string enemy4 = "Large Spider"; //strength is 1
         int maxEnemies = 6;
         float enemyHealth = 100.0f;
         float playerHealth = 100.0f;
         bool playerIsAlive = true;
         bool enemyIsAlive = true;
         float damage = 1.1f;
+        float enemyDamage = 8;
         float strength = 1.0f;
         float defense = 0.0f;
         int dungeonNumber = 0;
         bool gameOver = false;
-        float sword1Damage = 8.0f;
+        float sword1Damage = 9.0f;
         float bow1Damage = 7.0f;
-        float mace1Damage = 9.0f;
+        float mace1Damage = 11.0f;
         string playerChoice = "";
         int currentScene = 0;
         
@@ -244,6 +245,18 @@ namespace HelloDungeon
                 Console.WriteLine("Near Death");
             }
         }
+        float Attack(float enemyHealth, float Damage, float Strength)
+        {
+            _ = enemyHealth - Damage * Strength;
+
+            return enemyHealth;
+        }
+        float Fortification(float defense, float add)
+        {
+            _ = defense + add;
+
+            return defense;
+        }
         void StartBattle(float playerHealth, float enemyHealth, string enemyName, float enemyAttack)
         {
             while (playerIsAlive && enemyIsAlive)
@@ -257,7 +270,7 @@ namespace HelloDungeon
                 DisplayMenu("What would you like to do?", "Attack", "Defend", "");
                 if (playerChoice == "1")
                 {
-                    enemyHealth -= damage * strength;
+                    Attack(enemyHealth, damage, strength);
                     Console.WriteLine("you deal " + damage + " damage.");
                     Console.WriteLine("enemy health is now " + enemyHealth);
                     Console.WriteLine("press any key to continue");
@@ -265,7 +278,7 @@ namespace HelloDungeon
                 }
                 else if (playerChoice == "2")
                 {
-                    defense += 2;
+                    Fortification(defense, 2);
                     Console.WriteLine("You prepare to take a hit");
                     Console.WriteLine("your defense is now " + defense);
                     Console.WriteLine("press any key to continue");
@@ -294,6 +307,7 @@ namespace HelloDungeon
             }
             
         }
+       
 
         public void Run()
         { 
